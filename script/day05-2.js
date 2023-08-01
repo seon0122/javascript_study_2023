@@ -6,9 +6,9 @@ b += 4 //새로운 값이 대입될 경우 기존 값 2가 제거되고 4로 새
 console.log(b)
 
 //연관된 데이터 2개 이상을 배열로 담을 수 있다.
-const yoil = ['일', '월', '화', '수', '목', '금', '토']
-console.log(yoil)
-console.log(`오늘은 ${yoil[1]}요일입니다!`)
+// const yoil = ['일', '월', '화', '수', '목', '금', '토']
+// console.log(yoil)
+// console.log(`오늘은 ${yoil[1]}요일입니다!`)
 
 const colorArray = ['white', 'red', 'yellow', 'skyblue']
 const weatherArray = ['맑음', '흐림', '비', '눈', '소나기']
