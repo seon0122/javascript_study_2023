@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day13_scroll4</title>
+    <link rel="stylesheet" href="./styles/reset.css">
+    <style>
+        header {
+            position:fixed; top:50px; left:50px;
+        }
+        header h1 {
+            font-size:2.3rem; font-weight:600;
+        }
+        header nav {
+            /* background: yellow; */
+            padding-top:10px;
+        }
+        header nav a {
+            display:inline-block;
+            padding:0 10px;
+        }
+        aside {
+            position:fixed;
+            top:50%; left:50px;            
+        }
+        aside .bar {
+            display:block; background:#000;
+            width:30px; height:2px; margin-bottom:10px;
+        }
+        aside .active {width:100%; background:#fff;}
+        main {background:lightcoral;}
+        main .bg {
+            height:100vh; background-size:cover;
+            background-position:center;
+        }
+        main .bg1 {background:url(./images/bg1.jpg) no-repeat;}
+        main .bg2 {background:url(./images/bg2.jpg) no-repeat;}
+        main .bg3 {background:url(./images/bg3.jpg) no-repeat;}
+        main .bg4 {background:url(./images/bg4.jpg) no-repeat;}
+
+        #mouse {
+            width:50px; height:50px; 
+            border:5px solid #fff; border-radius: 50%;
+            /* 화면 최상단 스크롤 상관없이 고정되며 마우스 따라가는 CSS */
+            position:fixed; left:0px; top:0; z-index:999;
+            transform: translate(-50%, -50%);
+            transition:all 0.2s linear; /* 애니메이션 기능 추가 */
+            /* 필수속성:마우스 따라다니는 이미지 만들 경우 */
+            /* (위)링크, 버튼 등 선택이 안되는 문제 해결 */
+            pointer-events:none;
+        }
+    </style>
+</head>
+<body>
+    <div id="mouse"></div>
+    <header>
+        <h1>Interior view</h1>
+        <nav>
+            <a href="#">A</a>
+            <a href="#">B</a>
+            <a href="#">C</a>
+            <a href="#">D</a>
+        </nav>
+    </header>
+    <aside>
+        <span class="bar active"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </aside>
+    <main>
+        <div class="bg bg1"></div>
+        <div class="bg bg2"></div>
+        <div class="bg bg3"></div>
+        <div class="bg bg4"></div>
+    </main>
+    <script>
+        const nav_a = document.querySelectorAll('nav a')
+        const bg = document.querySelectorAll('main .bg')
+        const bar = document.querySelectorAll('aside .bar')
+        console.log(nav_a,bg, bar)
+
+        // nav_a 클릭 시 각 bg 위치 이동 forEach문
+        nav_a.forEach(function(t,i){
+            console.log(t)
+            t.addEventListener('click',function(e){
+                e.preventDefault() //a href 기능막기 (위로 새로고침 기능)
+                window.scrollTo(0, bg[i].offsetTop)
+            })
+        })
+        // scroll 움직일 때 bg 위치에 따른 bar 색상 변경
+        const body = document.querySelector('body,html')
+        window.addEventListener('scroll',function(){
+            // console.log('body.scrollTop>>', body.scrollTop)
+            bar.forEach(function(t,i){
+                if(body.scrollTop >= bg[i].offsetTop){
+                    for(let j of bar){j.classList.remove('active')}
+                    t.classList.add('active')
+                }
+            })
+        })
+
+        // 마우스 움직일 때 이벤트
+        const mouseImg = document.querySelector('#mouse')
+        console.log(mouseImg)
+        window.addEventListener('mousemove',function(e){
+            // console.log(e)
+            mouseImg.style.left = `${e.clientX}px`
+            mouseImg.style.top = `${e.clientY}px`
+        })
+    </script>
+</body>
+</html>
